@@ -1,0 +1,76 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXFileReference section */
+		4BE4AB041AD88FFD00E78648 /* MainScreen.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainScreen.xib; sourceTree = "<group>"; };
+		4BE4AB051AD890B800E78648 /* ControlBlockView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ControlBlockView.h; sourceTree = "<group>"; };
+		4BE4AB061AD890B800E78648 /* ControlBlockView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ControlBlockView.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		4BE4AAFD1AD88FC300E78648 = {
+			isa = PBXGroup;
+			children = (
+				4BE4AB041AD88FFD00E78648 /* MainScreen.xib */,
+				4BE4AB051AD890B800E78648 /* ControlBlockView.h */,
+				4BE4AB061AD890B800E78648 /* ControlBlockView.m */,
+			);
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXProject section */
+		4BE4AAFE1AD88FC300E78648 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0630;
+			};
+			buildConfigurationList = 4BE4AB011AD88FC300E78648 /* Build configuration list for PBXProject "UberTeam" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 4BE4AAFD1AD88FC300E78648;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+			);
+		};
+/* End PBXProject section */
+
+/* Begin XCBuildConfiguration section */
+		4BE4AB021AD88FC300E78648 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		4BE4AB031AD88FC300E78648 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4BE4AB011AD88FC300E78648 /* Build configuration list for PBXProject "UberTeam" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4BE4AB021AD88FC300E78648 /* Debug */,
+				4BE4AB031AD88FC300E78648 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 4BE4AAFE1AD88FC300E78648 /* Project object */;
+}
