@@ -11,6 +11,7 @@ var {
   StyleSheet,
   Text,
   View,
+  Image
 } = React;
 
 var InstructionType = {
@@ -157,7 +158,7 @@ GameHandler.prototype.getInstructionLabel = function(instructionType, goalState)
     case InstructionType.AC:
       return 'Turn ' + (goalState === 0 ? 'off' : 'on') + ' the AC';
     case InstructionType.HeadLights:
-      return 'Turn ' + (goalState === 0 ? 'off' : 'on') + ' the HeadLights';
+      return 'Turn ' + (goalState === 0 ? 'off' : 'on') + ' the headlights';
   }
 }
 
@@ -200,6 +201,7 @@ var UberTeam = React.createClass({
   render: function() {
     return (
       <View style={styles.container}>
+        <Image style={styles.pic} source={require('image!bug2')} />
         <Text style={styles.welcome}>
           {this.state.instructionText}
         </Text>
@@ -225,6 +227,12 @@ var styles = StyleSheet.create({
     fontSize: 20,
     textAlign: 'center',
     margin: 10,
+  },
+  pic: {
+    // backgroundColor: '#000000',
+    // alignSelf: 'auto',
+    width: 100,
+    height: 100
   },
   instructions: {
     textAlign: 'center',
