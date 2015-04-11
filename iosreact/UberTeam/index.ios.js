@@ -43,7 +43,7 @@ function GameHandler(userId, uiHandler) {
 }
 
 GameHandler.prototype.startEventLoop = function(interval) {
-  return setInterval(this.update, interval);
+  return setInterval(this.update.bind(this), interval);
 }
 
 GameHandler.prototype.update = function() {
@@ -126,8 +126,8 @@ var UberTeam = React.createClass({
     var id = new Date().getTime();
     // var socket = io();
     // socket.emit('join-game', id);
-    var gameLogic = new GameHandler(id, this);
-    this.setState({gameLogic: gameLogic});
+    var gameHandler = new GameHandler(id, this);
+    this.setState({gameLogic: gameHandler});
   },
 
   render: function() {
