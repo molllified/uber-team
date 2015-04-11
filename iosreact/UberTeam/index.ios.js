@@ -13,7 +13,9 @@ var {
   View,
   Image,
   SwitchIOS,
-  SliderIOS
+  SliderIOS,
+  TouchableHighlight,
+  NavigatorIOS
 } = React;
 
 var InstructionType = {
@@ -23,6 +25,10 @@ var InstructionType = {
   Shift: 3,
   AC: 4,
   HeadLights: 5
+};
+
+var Colors = {
+  lightBlue: '#1AD6FD'
 };
 
 var GameModel = function(currScore, userInstructions, timeToDest) {
@@ -172,6 +178,38 @@ GameHandler.prototype.getInstructionLabel = function(instructionType, goalState)
 // Then an UberTeam obj can be created.
 
 var UberTeam = React.createClass({
+
+  render: function() {
+    return (
+      <NavigatorIOS
+        style={styles.container}
+        initialRoute={{
+          title: 'Game',
+          component: StartScreen
+        }} />
+    );
+  }
+});
+
+var StartScreen = React.createClass({
+  startGame: function() {
+    this.props.navigator.push({
+      title: 'Game',
+      component: MainScreen
+    });
+  },
+  render: function() {
+    return (
+      <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center'}}>
+        <TouchableHighlight onPress={this.startGame} style={{height: 30, backgroundColor: Colors.li, width:30, marginTop: 200, flexDirection: 'row', alignItems:'stretch'}}>
+          <Text>Start Game</Text>
+        </TouchableHighlight>
+      </View>
+    );
+  }
+});
+
+var MainScreen = React.createClass({
   getInitialState: function() {
     return {
       game_id: 1,
@@ -199,11 +237,16 @@ var UberTeam = React.createClass({
       timePercent: data.timePercent
     });
   },
-
+  //Dimensions.get('window').width todo
   render: function() {
     return (
       <View style={styles.container}>
-        <Image style={styles.pic} source={require('image!bug2')} />
+        <Image style={styles.pic} source={require('image!bug2')}>
+          <View style={{height: 50, width: 10}}></View>
+          <View style={{height: 50, width: 10, backgroundColor: 'blue'}}></View>
+        </Image>
+        <View style={{height: 50, translateX: 50, width: 10, backgroundColor: 'red'}}></View>
+
         <Text>
           Score: {this.state.score}
         </Text>
@@ -211,6 +254,10 @@ var UberTeam = React.createClass({
           Time: {this.state.timePercent}
         </Text>
         <Text style={styles.banner}>{this.state.instructionText}</Text>
+        <View style={{height: 3, flexDirection: 'row', alignItems:'stretch'}}>
+          <View style={{height: 3, flex: this.state.timePercent, backgroundColor: Colors.lightBlue}}></View>
+          <View style={{height: 1, flex: 1 - this.state.timePercent}}></View>
+        </View>
         <View style={styles.instructions}>
           <View style = {styles.instructions_column}>
             <Text>Headlights</Text>
@@ -234,13 +281,15 @@ var styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: 'rgba(0,0,0,0)',
   },
   horizontal: {
     height: 100,
   },
   pic: {
-    height: 100
+    height: 100,
+    flexDirection: 'row',
+    alignItems:'stretch'
   },
   instructions: {
     flex: 1,
@@ -253,8 +302,10 @@ var styles = StyleSheet.create({
     marginLeft: 10,
   },
   banner: {
-    fontSize: 14,
+    fontSize: 20,
     textAlign: 'center',
+    marginTop: 20,
+    marginBottom: 20,
   },
   road: {
     height: 50,
