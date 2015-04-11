@@ -300,7 +300,7 @@ var MainScreen = React.createClass({
 
   _onPressBrakeButton () {
     this.state.Brake = 1;
-    this.state.gameLogic.handleWidgetChange('Brake', 1);
+    this.state.gameLogic.handleWidgetChange('Brake', 0);
   },
 
   render: function() {
@@ -337,13 +337,13 @@ var MainScreen = React.createClass({
         </View>
         <View style= {{flex: 1, flexDirection: 'row', marginTop: 20, justifyContent: 'center'}}>
           <View style = {styles.button}>
-            <TouchableOpacity onPress={this._onPressGasButton}>
-              <Text>Gas</Text>
+            <TouchableOpacity onPress={this._onPressBrakeButton}>
+              <Text>Brake</Text>
             </TouchableOpacity>
           </View>
           <View style = {styles.button}>
-            <TouchableOpacity onPress={this._onPressBrakeButton}>
-              <Text>Brake</Text>
+            <TouchableOpacity onPress={this._onPressGasButton}>
+              <Text>Gas</Text>
             </TouchableOpacity>
           </View>
         </View>
