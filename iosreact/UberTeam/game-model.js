@@ -1,21 +1,20 @@
 'use strict';
 
-var GameModel = function() {
-  var currScore= 0;
-  var playerInstructions= {};
-  var timeToDest= 0;
+var GameModel = function(currScore, playerInstructions, timeToDest) {
+  this.currScore = currScore;
+  this.playerInstructions = playerInstructions;
+  this.timeToDest = timeToDest;
 };
 
-var PlayerInstruction = function () {
-  var type= null;
-  var expireTime= null;
-  var startTime= null;
-  var started= false;
-  var data= null;
+var PlayerInstruction = function (type, expireTime, startTime, started, goalState) {
+  this.type = type;
+  this.expireTime = expireTime;
+  this.tartTime = startTime;
+  this.started = started;
+  this.goalState = goalState;
 }
 
 module.exports = {
   GameModel: GameModel,
-  Player: Player,
-  Instruction: Instruction
+  PlayerInstruction: PlayerInstruction
 };
