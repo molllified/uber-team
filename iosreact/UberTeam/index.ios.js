@@ -51,6 +51,11 @@ function GameHandler(userId, uiHandler, userInstructions) {
   this.userId = userId;
   this.actionTime = 5000;
   this.uiHandler = uiHandler;
+  this.widgetStates = {}
+  this.widgetStates[InstructionType.Gas] = 0;
+  this.widgetStates[InstructionType.Brake] = 0;
+  this.widgetStates[InstructionType.AC] = 0;
+  this.widgetStates[InstructionType.Headlights] = 0;
 }
 
 GameHandler.prototype.stopLoop = function() {
@@ -79,7 +84,8 @@ GameHandler.prototype.update = function() {
   this.dispatchUIChanges();
 }
 
-GameHandler.prototype.handleWidgetChange = function(widgetType, state) {
+GameHandler.prototype.handleWidgetChange = function(widgetType, state, widgetStates) {
+  this.widgetStates = widgetStates;
   for (var userId in this.gameState.userInstructions) {
     var instruction = this.gameState.userInstructions[userId];
     console.log(widgetType + ' '+ state);
@@ -151,7 +157,15 @@ GameHandler.prototype.generateNewInstructionForUser = function(userId) {
       break;
   }
 
-  var goalState = parseInt(Math.random() * numStates);
+  var goalState;
+  console.log(this.widgetStates);
+  if (numStates == 2) {
+    goalState = 1 - this.widgetStates[newType];
+  }
+  else {
+    goalState = 0;
+  }
+
   var started = true
   var instruction = new UserInstruction(newType, expireTime, startTime, started, goalState);
 
@@ -277,28 +291,39 @@ var MainScreen = React.createClass({
     }
     if(this.state.score >= 100) {
       sessionMessage = 'You win!';
+      this.state.gameLogic.stopLoop();
       this.props.navigator.pop();
     }
   },
 
+  _getWidgetStates() {
+    var widgetStates = {};
+    widgetStates[InstructionType.Gas] = 0;
+    widgetStates[InstructionType.Brake] = 0;
+    widgetStates[InstructionType.AC] = this.state.AC ? 1 : 0;
+    widgetStates[InstructionType.Headlights] = this.state.Headlights ? 1 : 0;
+
+    return widgetStates;
+  },
+
   _handleHeadLightsChange (value) {
     this.state.Headlights = value;
-    this.state.gameLogic.handleWidgetChange('Headlights', value);
+    this.state.gameLogic.handleWidgetChange('Headlights', value, this._getWidgetStates());
   },
 
   _handleACChange (value) {
     this.state.AC = value;
-    this.state.gameLogic.handleWidgetChange('AC', value);
+    this.state.gameLogic.handleWidgetChange('AC', value, this._getWidgetStates());
   },
 
   _onPressGasButton () {
     this.state.Gas = 0;
-    this.state.gameLogic.handleWidgetChange('Gas', 0);
+    this.state.gameLogic.handleWidgetChange('Gas', 0, this._getWidgetStates());
   },
 
   _onPressBrakeButton () {
     this.state.Brake = 1;
-    this.state.gameLogic.handleWidgetChange('Brake', 0);
+    this.state.gameLogic.handleWidgetChange('Brake', 0, this._getWidgetStates());
   },
 
   render: function() {
@@ -306,7 +331,7 @@ var MainScreen = React.createClass({
       <View style={styles.container}>
         <Image style={styles.pic} source={require('image!newroad')}>
         </Image>
-        <Image style={{height: 25, left: 400 * this.state.score/100. - 25, top:-33, width:50, translateX: 59}} source={require('image!vehicle')}></Image>
+        <Image style={{height: 25, left: 400 * this.state.score/100. - 25, top:-33, width:50}} source={require('image!vehicle')}></Image>
 
         <Text>
           Score: {this.state.score}
