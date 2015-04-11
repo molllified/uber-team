@@ -213,6 +213,7 @@ var UberTeam = React.createClass({
         <Text>
           Time: {this.state.timePercent}
         </Text>
+
       </View>
     );
   }
@@ -236,13 +237,21 @@ var styles = StyleSheet.create({
   instructions: {
     flex: 1,
     flexDirection: 'row',
+    marginTop: 20,
     marginBottom: 5,
+    justifyContent: 'center'
+  },
+  instructions_column: {
+    marginLeft: 10,
   },
   banner: {
     fontSize: 14,
     textAlign: 'center',
-    marginTop: 100,
   },
+  road: {
+    height: 50,
+    backgroundColor: 'rgba(255,255,255,0.8)'
+  }
 });
 
 AppRegistry.registerComponent('UberTeam', () => UberTeam);
