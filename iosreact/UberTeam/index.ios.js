@@ -20,13 +20,13 @@ var InstructionType = {
   Shift: 3
 };
 
-var GameModel = function(currScore, playerInstructions, timeToDest) {
+var GameModel = function(currScore, userInstructions, timeToDest) {
   this.currScore = currScore;
-  this.playerInstructions = playerInstructions;
+  this.userInstructions = userInstructions;
   this.timeToDest = timeToDest;
 }
 
-var PlayerInstruction = function (type, expireTime, startTime, started, goalState) {
+var UserInstructions = function (type, expireTime, startTime, started, goalState) {
   this.type = type;
   this.expireTime = expireTime;
   this.startTime = startTime;
@@ -49,7 +49,7 @@ GameHandler.prototype.startEventLoop = function(interval) {
 GameHandler.prototype.update = function() {
   var currTime = new Date().getTime();
   console.log(this);
-  var myInstructions = this.getMyInstructions();
+  var myInstructions = this.getMyInstruction();
   for (instruction in myInstructions) {
     if (instruction.startTime >= currTime) {
       instruction.started = true;
@@ -62,33 +62,60 @@ GameHandler.prototype.update = function() {
       this.handleStateChange();
     }
   }
+
+  this.dispatchUIChanges();
+}
+
+GameHandler.prototype.handleWidgetChange = function(widgetType, state) {
+  for (userId in this.gameState.userInstructions) {
+    instruction = this.gameState.userInstructions[user];
+    if (instruction.type == widgetType && instruction.goalState = state) {
+      this.reward();
+      this.generateNewInstructionForUser(userId);
+      this.handleStateChange();
+    }
+  }
 }
 
 // For when server tells me to update my state
-GameHandler.prototype.handleStateUpdate = function(newState) {
+GameHandler.prototype.forceStateUpdate = function(newState) {
   this.gameState = newState;
-  this.dispatchUIChanges(); //and transitions
 }
 
-// For when my own actions caused my state to change
+// For when my state changes
 GameHandler.prototype.handleStateChange = function() {
-  this.dispatchUIChanges(); //and transitions
+  // tell server to broadcast
+  this.uiHandler.broadcastState(this.gameState);
 }
 
-GameHandler.prototype.getMyInstructions = function() {
-  return null;
-  // console.log(this.gameState.playerInstructions);
-  // return this.gameState.playerInstructions[this.userId];
+GameHandler.prototype.dispatchUIChanges = function() {
+  var myInstruction = this.getMyInstruction();
+  var currTime = new Date().getTime();
+  var timePercent = (currTime - myInstruction.startTime) / (myInstruction.expireTime - myInstruction.startTime);
+  this.uiHandler.update({
+    score: currScore,
+    instruction: this.getInstructionLabel(myInstruction.type, myInstruction.goalState),
+    timePercent: timePercent
+  });
+}
+
+GameHandler.prototype.getMyInstruction = function() {
+  return this.gameState.userInstructions[this.userId];
 }
 
 GameHandler.prototype.punish = function() {
   this.gameState.score -= 1;
 }
 
+GameHandler.prototype.reward = function() {
+  this.gameState.score += 1;
+}
+
 GameHandler.prototype.generateNewInstruction = function() {
   var newType = (int)(Math.random() * InstructionType.keys(obj).length);
   var numStates;
   var expireTime;
+  var startTime = new Date().getTime();
 
   switch(newType) {
     case InstructionType.Steer:
@@ -96,20 +123,31 @@ GameHandler.prototype.generateNewInstruction = function() {
     case InstructionType.Brake:
       numStates = 2;
       expireTime = new Date().getTime() + actionTime;
-      startTime = 0;
       break;
     case InstructionType.Shift:
       numStates = 6;
       expireTime = new Date().getTime() + actionTime;
-      startTime = 0;
       break;
   }
 
   var goalState = (int)(Math.random() * numStates);
-  var started = startTime === 0 ? true : false;
+  var started = true
 
-  var instruction = new PlayerInstruction(newType, expireTime, startTime, started, goalState);
-  this.gameState.playerInstructions[this.userId] = instruction;
+  var instruction = new userInstruction(newType, expireTime, startTime, started, goalState);
+  this.gameState.userInstructions[this.userId] = instruction;
+}
+
+GameHandler.prototype.getInstructionLabel = function(instructionType, goalState) {
+  switch(instructionType) {
+    case InstructionType.Steer:
+      return 'Turn steering wheel ' + goalState === 0 ? left : right;
+    case InstructionType.Gas: 
+      return 'Press gas';
+    case InstructionType.Brake:
+      return 'Press brake';
+    case InstructionType.Shift:
+      return 'Shift to gear ' + this.goalState + 1;
+  }
 }
 
 var UberTeam = React.createClass({
