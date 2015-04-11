@@ -51,7 +51,7 @@ function GameHandler(userId, uiHandler, userInstructions) {
   this.gameState = new GameModel(50, userInstructions, 0);
   this.eventLoop = this.startEventLoop(15);
   this.userId = userId;
-  this.actionTime = 1000;
+  this.actionTime = 5000;
   this.uiHandler = uiHandler;
 }
 
@@ -224,35 +224,16 @@ var StartScreen = React.createClass({
     });
   },
   render: function() {
-    if (this.state.gameReady) {
-      return (
-        <View style={{flex: 1, flexDirection: 'column', justifyContent: 'center'}}>
-          <Text>
-            {{sessionMessage}}
-          </Text>
-          <View >
-            <TouchableHighlight onPress={this.startGame} style={{height: 30, width:30, marginTop: 200, flexDirection: 'row'}}>
-              <Text>Start Game</Text>
-            </TouchableHighlight>
-          </View>
-        </View>
-      );
-    }
-    else {
-      return (
-        <View style={{flex: 1, flexDirection: 'column', justifyContent: 'center'}}>
-          <Text>
-            {{sessionMessage}}
-          </Text>
-          <View >
-            <Text>
-              Waiting for players to join
-            </Text>
-            <ActivityIndicatorIOS color="#0000ff" />
-          </View>
-        </View>
-      );
-    }
+    return (
+      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+        <Text style={{marginBottom: 100}}>
+          {{sessionMessage}}
+        </Text>
+        <TouchableHighlight onPress={this.startGame} style={{textAlign: 'center', height: 30}}>
+          <Text>Start Game</Text>
+        </TouchableHighlight>
+      </View>
+    );
   }
 });
 
@@ -278,7 +259,7 @@ var MainScreen = React.createClass({
     // var socket = io();
     // socket.emit('join-game', id);
     var userInstructions = {};
-    userInstructions[this.props.id] = new UserInstruction(InstructionType.Steer, new Date().getTime() + 1000, new Date().getTime(), true, 1);
+    userInstructions[this.props.id] = new UserInstruction(InstructionType.Steer, new Date().getTime() + 5000, new Date().getTime(), true, 1);
     var gameHandler = new GameHandler(this.props.id, this, userInstructions);
     this.setState({gameLogic: gameHandler});
   },
@@ -315,7 +296,7 @@ var MainScreen = React.createClass({
       <View style={styles.container}>
         <Image style={styles.pic} source={require('image!newroad')}>
         </Image>
-        <Image style={{height: 25, left: 400 * this.state.score/100. - 25, top:-50, width:50, translateX: 59}} source={require('image!vehicle')}></Image>
+        <Image style={{height: 25, left: 400 * this.state.score/100. - 25, top:-33, width:50, translateX: 59}} source={require('image!vehicle')}></Image>
 
         <Text>
           Score: {this.state.score}
@@ -358,9 +339,10 @@ var styles = StyleSheet.create({
   },
   pic: {
     height: 50,
-    flexDirection: 'column',
+    width: 400,
+    flexDirection: 'row',
     alignItems:'stretch',
-    flex: 0.5
+    flex: 0.2
   },
   instructions: {
     flex: 1,
