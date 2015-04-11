@@ -21,8 +21,8 @@ enum ControlBlockType : NSUInteger {
 
 @interface ControlBlockView : UIView
 
-@property (nonatomic, strong) NSString *type;
-@property (nonatomic, strong) NSInteger *state;
+@property (nonatomic) enum ControlBlockType type;
+@property (nonatomic) NSInteger *state;
 - (void)broadcastStateChange;
 
 @end

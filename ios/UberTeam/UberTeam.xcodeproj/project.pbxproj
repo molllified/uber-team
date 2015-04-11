@@ -17,8 +17,9 @@
 		4B12338A1AD8A26B000E6866 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B1233881AD8A26B000E6866 /* LaunchScreen.xib */; };
 		4B1233961AD8A26C000E6866 /* simulatorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B1233951AD8A26C000E6866 /* simulatorTests.m */; };
 		4BD4A7D91AD8A3A8003C9398 /* ShifterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BE4AB151AD8A08200E78648 /* ShifterView.m */; };
-		4BD4A7DA1AD8A3AD003C9398 /* SteerControlView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BE4AB0D1AD899BE00E78648 /* SteerControlView.m */; };
 		4BD4A7DB1AD8A3B1003C9398 /* ControlBlockView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BE4AB0A1AD8967600E78648 /* ControlBlockView.m */; };
+		4BD4A7DE1AD8A66F003C9398 /* MainScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BD4A7DD1AD8A66F003C9398 /* MainScreenViewController.m */; };
+		4BD4A7E51AD8AC54003C9398 /* MainScrewView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4BD4A7E41AD8AC54003C9398 /* MainScrewView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,11 +50,11 @@
 		4B12338F1AD8A26C000E6866 /* simulatorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = simulatorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B1233941AD8A26C000E6866 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4B1233951AD8A26C000E6866 /* simulatorTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = simulatorTests.m; sourceTree = "<group>"; };
-		4BE4AB041AD88FFD00E78648 /* MainScreen.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainScreen.xib; sourceTree = "<group>"; };
+		4BD4A7DC1AD8A66F003C9398 /* MainScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainScreenViewController.h; sourceTree = "<group>"; };
+		4BD4A7DD1AD8A66F003C9398 /* MainScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainScreenViewController.m; sourceTree = "<group>"; };
+		4BD4A7E41AD8AC54003C9398 /* MainScrewView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainScrewView.xib; sourceTree = "<group>"; };
 		4BE4AB091AD8967600E78648 /* ControlBlockView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ControlBlockView.h; sourceTree = "<group>"; };
 		4BE4AB0A1AD8967600E78648 /* ControlBlockView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ControlBlockView.m; sourceTree = "<group>"; };
-		4BE4AB0C1AD899BE00E78648 /* SteerControlView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SteerControlView.h; sourceTree = "<group>"; };
-		4BE4AB0D1AD899BE00E78648 /* SteerControlView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SteerControlView.m; sourceTree = "<group>"; };
 		4BE4AB0F1AD89C6100E78648 /* GasPedalView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GasPedalView.xib; sourceTree = "<group>"; };
 		4BE4AB121AD89E2E00E78648 /* GasPedal.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = GasPedal.jpg; sourceTree = "<group>"; };
 		4BE4AB131AD89EDC00E78648 /* ShifterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShifterView.xib; sourceTree = "<group>"; };
@@ -136,9 +137,11 @@
 		4BE4AAFD1AD88FC300E78648 = {
 			isa = PBXGroup;
 			children = (
+				4BD4A7E41AD8AC54003C9398 /* MainScrewView.xib */,
+				4BD4A7DC1AD8A66F003C9398 /* MainScreenViewController.h */,
+				4BD4A7DD1AD8A66F003C9398 /* MainScreenViewController.m */,
 				4BE4AB101AD89CA000E78648 /* Assets */,
 				4BE4AB0B1AD898F600E78648 /* ControlBlocks */,
-				4BE4AB041AD88FFD00E78648 /* MainScreen.xib */,
 				4B1233721AD8A26B000E6866 /* simulator */,
 				4B1233921AD8A26C000E6866 /* simulatorTests */,
 				4B1233711AD8A26B000E6866 /* Products */,
@@ -150,8 +153,6 @@
 			children = (
 				4BE4AB091AD8967600E78648 /* ControlBlockView.h */,
 				4BE4AB0A1AD8967600E78648 /* ControlBlockView.m */,
-				4BE4AB0C1AD899BE00E78648 /* SteerControlView.h */,
-				4BE4AB0D1AD899BE00E78648 /* SteerControlView.m */,
 				4BE4AB0F1AD89C6100E78648 /* GasPedalView.xib */,
 				4BE4AB141AD8A08200E78648 /* ShifterView.h */,
 				4BE4AB151AD8A08200E78648 /* ShifterView.m */,
@@ -249,6 +250,7 @@
 			files = (
 				4B1233851AD8A26B000E6866 /* Main.storyboard in Resources */,
 				4B12338A1AD8A26B000E6866 /* LaunchScreen.xib in Resources */,
+				4BD4A7E51AD8AC54003C9398 /* MainScrewView.xib in Resources */,
 				4B1233871AD8A26B000E6866 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -273,8 +275,8 @@
 				4B1233821AD8A26B000E6866 /* ModelController.m in Sources */,
 				4BD4A7DB1AD8A3B1003C9398 /* ControlBlockView.m in Sources */,
 				4B1233761AD8A26B000E6866 /* main.m in Sources */,
+				4BD4A7DE1AD8A66F003C9398 /* MainScreenViewController.m in Sources */,
 				4B12337C1AD8A26B000E6866 /* RootViewController.m in Sources */,
-				4BD4A7DA1AD8A3AD003C9398 /* SteerControlView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

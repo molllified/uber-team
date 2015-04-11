@@ -10,7 +10,7 @@
 
 @implementation ControlBlockView
 
--(void)broadcastStateChange {
-  
+- (void)broadcastStateChange {
+  NSLog(@"Type: %td, Yo, state is now: %zd", self.type, self.state);
 }
 @end

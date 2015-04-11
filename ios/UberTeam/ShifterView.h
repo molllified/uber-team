@@ -10,6 +10,7 @@
 #import "ControlBlockView.h"
 
 @interface ShifterView : ControlBlockView
-@property (weak, nonatomic) IBOutlet UISlider *slider;
 
+@property (weak, nonatomic) IBOutlet UISlider *slider;
++ (ShifterView *)shifterCell;
 @end

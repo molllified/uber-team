@@ -6,22 +6,23 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ShifterView">
             <connections>
-                <outlet property="slider" destination="HB6-mh-9xp" id="Yjm-Rb-7OL"/>
+                <outlet property="slider" destination="HB6-mh-9xp" id="DfD-oU-wNl"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="ShifterView">
+        <view contentMode="scaleToFill" id="Nax-wS-c6v" customClass="ShifterView">
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="1" maxValue="6" translatesAutoresizingMaskIntoConstraints="NO" id="HB6-mh-9xp">
-                    <rect key="frame" x="63" y="285" width="475" height="31"/>
+                    <rect key="frame" x="103" y="285" width="395" height="31"/>
                     <connections>
                         <action selector="sliderChanged:" destination="-1" eventType="valueChanged" id="pHF-bR-sg8"/>
                     </connections>
                 </slider>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <point key="canvasLocation" x="109" y="501"/>
         </view>
     </objects>
 </document>
