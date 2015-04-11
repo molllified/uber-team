@@ -24,7 +24,7 @@ var InstructionType = {
   Brake: 2,
   Shift: 3,
   AC: 4,
-  HeadLights: 5
+  Headlights: 5
 };
 
 var Colors = {
@@ -50,7 +50,7 @@ function GameHandler(userId, uiHandler, userInstructions) {
   this.gameState = new GameModel(50, userInstructions, 0);
   this.eventLoop = this.startEventLoop(15);
   this.userId = userId;
-  this.actionTime = 10;
+  this.actionTime = 100;
   this.uiHandler = uiHandler;
 }
 
@@ -83,7 +83,7 @@ GameHandler.prototype.update = function() {
 GameHandler.prototype.handleWidgetChange = function(widgetType, state) {
   for (var userId in this.gameState.userInstructions) {
     var instruction = this.gameState.userInstructions[userId];
-    if (instruction.type === InstructionType[widgetType] && instruction.goalState === state) {
+    if (instruction.type == InstructionType[widgetType] && instruction.goalState == state) {
       this.reward();
       this.generateNewInstructionForUser(userId);
       this.handleStateChange();
@@ -136,7 +136,7 @@ GameHandler.prototype.generateNewInstructionForUser = function(userId) {
     case InstructionType.Gas: 
     case InstructionType.Brake:
     case InstructionType.AC:
-    case InstructionType.HeadLights:
+    case InstructionType.Headlights:
       numStates = 2;
       expireTime = new Date().getTime() + this.actionTime;
       break;
@@ -148,7 +148,7 @@ GameHandler.prototype.generateNewInstructionForUser = function(userId) {
 
   var goalState = parseInt(Math.random() * numStates);
   var started = true
-
+  console.log(newType + ' '+ numStates + ' ' + expireTime + ' '+ startTime + ' ' + goalState);
   var instruction = new UserInstruction(newType, expireTime, startTime, started, goalState);
 
   this.gameState.userInstructions[userId] = instruction;
@@ -170,7 +170,7 @@ GameHandler.prototype.getInstructionLabel = function(instructionType, goalState)
       return 'Shift to gear ' + (goalState + 1);
     case InstructionType.AC:
       return 'Turn ' + (goalState === 0 ? 'off' : 'on') + ' the AC';
-    case InstructionType.HeadLights:
+    case InstructionType.Headlights:
       return 'Turn ' + (goalState === 0 ? 'off' : 'on') + ' the headlights';
   }
 }
@@ -299,11 +299,11 @@ var MainScreen = React.createClass({
         <View style={styles.instructions}>
           <View style = {styles.instructions_column}>
             <Text>Headlights</Text>
-            <SwitchIOS onValueChange = {this._handleHeadLightsChange} ref='HeadLights' value={this.state.Headlights} />
+            <SwitchIOS onValueChange = {this._handleHeadLightsChange} value={this.state.Headlights} />
           </View>
           <View style = {styles.instructions_column}>
             <Text>A/C</Text>
-            <SwitchIOS onValueChange = {this._handleACChange} ref='AC' value={this.state.AC} />
+            <SwitchIOS onValueChange = {this._handleACChange} value={this.state.AC} />
           </View>
           <View style = {styles.instructions_column}>
             <Text>Temperature</Text>
