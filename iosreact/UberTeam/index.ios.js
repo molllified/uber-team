@@ -235,8 +235,7 @@ var MainScreen = React.createClass({
       Brake: false, 
       Shift: false, 
       AC: false, 
-      Headlights: false
-      timePercent: 0,
+      Headlights: false,
       gameLogic: null
     }
   },
