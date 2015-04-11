@@ -16,7 +16,8 @@ var {
   SliderIOS,
   TouchableHighlight,
   NavigatorIOS,
-  ActivityIndicatorIOS
+  ActivityIndicatorIOS,
+  TouchableOpacity
 } = React;
 
 var InstructionType = {
@@ -47,7 +48,6 @@ var UserInstruction = function (type, expireTime, startTime, started, goalState)
 }
 
 function GameHandler(userId, uiHandler, userInstructions) {
-  console.log(userInstructions);
   this.gameState = new GameModel(50, userInstructions, 0);
   this.eventLoop = this.startEventLoop(15);
   this.userId = userId;
@@ -84,6 +84,9 @@ GameHandler.prototype.update = function() {
 GameHandler.prototype.handleWidgetChange = function(widgetType, state) {
   for (var userId in this.gameState.userInstructions) {
     var instruction = this.gameState.userInstructions[userId];
+    console.log(widgetType + ' '+ state);
+    console.log(instruction.type + ' ' + InstructionType[widgetType]);
+    console.log(instruction.goalState);
     if (instruction.type == InstructionType[widgetType] && instruction.goalState == state) {
       this.reward();
       this.generateNewInstructionForUser(userId);
@@ -133,9 +136,12 @@ GameHandler.prototype.generateNewInstructionForUser = function(userId) {
   var startTime = new Date().getTime();
 
   switch(newType) {
-    case InstructionType.Steer:
-    case InstructionType.Gas: 
     case InstructionType.Brake:
+    case InstructionType.Gas: 
+      numStates = 1;
+      expireTime = new Date().getTime() + this.actionTime;
+      break;
+    case InstructionType.Steer:
     case InstructionType.AC:
     case InstructionType.Headlights:
       numStates = 2;
@@ -149,7 +155,6 @@ GameHandler.prototype.generateNewInstructionForUser = function(userId) {
 
   var goalState = parseInt(Math.random() * numStates);
   var started = true
-  console.log(newType + ' '+ numStates + ' ' + expireTime + ' '+ startTime + ' ' + goalState);
   var instruction = new UserInstruction(newType, expireTime, startTime, started, goalState);
 
   this.gameState.userInstructions[userId] = instruction;
@@ -211,9 +216,6 @@ var StartScreen = React.createClass({
   },
   userJoined: function(data) {
     this.state.users.push(data.name);
-  },
-  componentDidMount: function() {
-
   },
   startGame: function() {
     sessionMessage = '';
@@ -291,6 +293,16 @@ var MainScreen = React.createClass({
     this.state.gameLogic.handleWidgetChange('AC', value);
   },
 
+  _onPressGasButton () {
+    this.state.Gas = 0;
+    this.state.gameLogic.handleWidgetChange('Gas', 0);
+  },
+
+  _onPressBrakeButton () {
+    this.state.Brake = 1;
+    this.state.gameLogic.handleWidgetChange('Brake', 1);
+  },
+
   render: function() {
     return (
       <View style={styles.container}>
@@ -323,6 +335,18 @@ var MainScreen = React.createClass({
             <SliderIOS />
           </View>
         </View>
+        <View style= {{flex: 1, flexDirection: 'row', marginTop: 20, justifyContent: 'center'}}>
+          <View style = {styles.button}>
+            <TouchableOpacity onPress={this._onPressGasButton}>
+              <Text>Gas</Text>
+            </TouchableOpacity>
+          </View>
+          <View style = {styles.button}>
+            <TouchableOpacity onPress={this._onPressBrakeButton}>
+              <Text>Brake</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
       </View>
     );
   },
@@ -351,6 +375,10 @@ var styles = StyleSheet.create({
     marginBottom: 5,
     justifyContent: 'center'
   },
+  slider: {
+    height: 10,
+    margin: 10
+  },
   instructions_column: {
     marginLeft: 10,
   },
@@ -363,6 +391,11 @@ var styles = StyleSheet.create({
   road: {
     height: 50,
     backgroundColor: 'rgba(255,255,255,0.8)'
+  },  
+  button: {
+    backgroundColor: Colors.lightBlue,
+    marginRight: 20,
+    padding: 20,
   }
 });
 
