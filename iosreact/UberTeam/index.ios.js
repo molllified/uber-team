@@ -380,20 +380,12 @@ var styles = StyleSheet.create({
     height: 100,
   },
   brakeButton: {
-    height: 100,
+    height: 200,
     width: 200,
-    // width: 100,
-    // flex: 0.01,
-    // alignItems:'stretch',
-
   },
   gasButton: {
-    height: 150,
+    height: 300,
     width: 100,
-    // width: 150,
-    // flex: 0.01,
-    // alignItems:'stretch',
-
   },
   pic: {
     height: 50,
