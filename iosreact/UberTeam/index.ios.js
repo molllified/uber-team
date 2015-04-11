@@ -76,6 +76,7 @@ GameHandler.prototype.update = function() {
 }
 
 GameHandler.prototype.handleWidgetChange = function(widgetType, state) {
+  console.log(widgetType + ' '+ state);
   for (userId in this.gameState.userInstructions) {
     instruction = this.gameState.userInstructions[user];
     if (instruction.type === widgetType && instruction.goalState === state) {
@@ -101,6 +102,7 @@ GameHandler.prototype.dispatchUIChanges = function() {
   var myInstruction = this.getMyInstruction();
   var currTime = new Date().getTime();
   var timePercent = (myInstruction.expireTime - currTime) / (myInstruction.expireTime - myInstruction.startTime);
+  console.log(myInstruction.expireTime + ' '+ currTime);
   this.uiHandler.update({
     score: this.gameState.currScore,
     instruction: this.getInstructionLabel(myInstruction.type, myInstruction.goalState),
@@ -178,7 +180,6 @@ GameHandler.prototype.getInstructionLabel = function(instructionType, goalState)
 // Then an UberTeam obj can be created.
 
 var UberTeam = React.createClass({
-
   render: function() {
     return (
       <NavigatorIOS
@@ -215,11 +216,17 @@ var MainScreen = React.createClass({
       game_id: 1,
       score: 50,
       instructionText: '',
-      timePercent: 0
+      timePercent: 0, 
+      Steer: false, 
+      Gas: false, 
+      Brake: false, 
+      Shift: false, 
+      AC: false, 
+      Headlights: false
     }
   },
 
-  componentDidMount: function() {
+  componentDidMount () {
     // initialize socket
     var id = new Date().getTime();
     // var socket = io();
@@ -230,14 +237,28 @@ var MainScreen = React.createClass({
     this.setState({gameLogic: gameHandler});
   },
 
-  update: function(data) {
+  update (data) {
     this.setState({
       score: data.score,
       instructionText: data.instruction,
       timePercent: data.timePercent
     });
   },
-  //Dimensions.get('window').width todo
+
+  _handleHeadLightsChange (value) {
+    this.state.Headlights = value;
+    if (!this.state.gameLogic || !value) {
+      // this.state.gameLogic.handleWidgetChange(InstructionType.Headlights, value);
+    }
+  },
+
+  _handleACChange (value) {
+    this.state.AC = value;
+    if (!this.state.gameLogic || !value) {
+      // this.state.gameLogic.handleWidgetChange(InstructionType.Headlights, value);
+    }
+  },
+
   render: function() {
     return (
       <View style={styles.container}>
@@ -261,11 +282,11 @@ var MainScreen = React.createClass({
         <View style={styles.instructions}>
           <View style = {styles.instructions_column}>
             <Text>Headlights</Text>
-            <SwitchIOS />
+            <SwitchIOS onValueChange = {this._handleHeadLightsChange} ref='HeadLights' value={this.state.Headlights} />
           </View>
           <View style = {styles.instructions_column}>
             <Text>A/C</Text>
-            <SwitchIOS />
+            <SwitchIOS onValueChange = {this._handleACChange} ref='AC' value={this.state.AC} />
           </View>
           <View style = {styles.instructions_column}>
             <Text>Temperature</Text>
@@ -274,7 +295,7 @@ var MainScreen = React.createClass({
         </View>
       </View>
     );
-  }
+  },
 });
 
 var styles = StyleSheet.create({
