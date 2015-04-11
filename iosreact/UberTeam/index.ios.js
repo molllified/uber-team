@@ -315,8 +315,7 @@ var MainScreen = React.createClass({
       <View style={styles.container}>
         <Image style={styles.pic} source={require('image!newroad')}>
         </Image>
-        <Image style={{height: 25, width:50, translateX: 59}} source={require('image!vehicle')}></Image>
-        <View style={{height: 50, translateX: 50, width: 10, backgroundColor: 'red'}}></View>
+        <Image style={{height: 25, left: 400 * this.state.score/100. - 25, top:-50, width:50, translateX: 59}} source={require('image!vehicle')}></Image>
 
         <Text>
           Score: {this.state.score}
