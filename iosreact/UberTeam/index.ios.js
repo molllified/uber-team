@@ -11,7 +11,7 @@ var {
   StyleSheet,
   Text,
   View,
-  Image
+  Image,
   SwitchIOS,
   SliderIOS
 } = React;
@@ -204,16 +204,27 @@ var UberTeam = React.createClass({
     return (
       <View style={styles.container}>
         <Image style={styles.pic} source={require('image!bug2')} />
-        <Text style={styles.welcome}>
-          {this.state.instructionText}
-        </Text>
         <Text>
           Score: {this.state.score}
         </Text>
         <Text>
           Time: {this.state.timePercent}
         </Text>
-
+        <Text style={styles.banner}>{this.state.instructionText}</Text>
+        <View style={styles.instructions}>
+          <View style = {styles.instructions_column}>
+            <Text>Headlights</Text>
+            <SwitchIOS />
+          </View>
+          <View style = {styles.instructions_column}>
+            <Text>A/C</Text>
+            <SwitchIOS />
+          </View>
+          <View style = {styles.instructions_column}>
+            <Text>Temperature</Text>
+            <SliderIOS />
+          </View>
+        </View>
       </View>
     );
   }
@@ -229,9 +240,6 @@ var styles = StyleSheet.create({
     height: 100,
   },
   pic: {
-    // backgroundColor: '#000000',
-    // alignSelf: 'auto',
-    width: 100,
     height: 100
   },
   instructions: {
