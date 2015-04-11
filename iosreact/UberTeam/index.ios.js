@@ -21,12 +21,10 @@ var {
 } = React;
 
 var InstructionType = {
-  Steer: 0,
-  Gas: 1,
-  Brake: 2,
-  Shift: 3,
-  AC: 4,
-  Headlights: 5
+  Gas: 0,
+  Brake: 1,
+  AC: 2,
+  Headlights: 3
 };
 
 var Colors = {
@@ -261,7 +259,7 @@ var MainScreen = React.createClass({
     // var socket = io();
     // socket.emit('join-game', id);
     var userInstructions = {};
-    userInstructions[this.props.id] = new UserInstruction(InstructionType.Steer, new Date().getTime() + 5000, new Date().getTime(), true, 1);
+    userInstructions[this.props.id] = new UserInstruction(InstructionType.AC, new Date().getTime() + 5000, new Date().getTime(), true, 1);
     var gameHandler = new GameHandler(this.props.id, this, userInstructions);
     this.setState({gameLogic: gameHandler});
   },
