@@ -17,7 +17,9 @@ var InstructionType = {
   Steer: 0,
   Gas: 1,
   Brake: 2,
-  Shift: 3
+  Shift: 3,
+  AC: 4,
+  HeadLights: 5
 };
 
 var GameModel = function(currScore, userInstructions, timeToDest) {
@@ -48,7 +50,6 @@ GameHandler.prototype.startEventLoop = function(interval) {
 
 GameHandler.prototype.update = function() {
   var currTime = new Date().getTime();
-  console.log(this);
   var myInstructions = this.getMyInstruction();
   for (var instruction in myInstructions) {
     if (instruction.startTime >= currTime) {
@@ -56,7 +57,7 @@ GameHandler.prototype.update = function() {
 
       this.handleStateChange();
     }
-    if (instruction.expireTime >= currTime) {
+    if (currTime >= instruction.expireTime) {
       this.punish();
       this.generateNewInstruction();
       this.handleStateChange();
@@ -91,14 +92,13 @@ GameHandler.prototype.handleStateChange = function() {
 GameHandler.prototype.dispatchUIChanges = function() {
   var myInstruction = this.getMyInstruction();
   var currTime = new Date().getTime();
-  var timePercent = (currTime - myInstruction.startTime) / (myInstruction.expireTime - myInstruction.startTime);
-  
-  // TODO molly implement this
-  // this.uiHandler.update({
-  //   score: this.gameState.currScore,
-  //   instruction: this.getInstructionLabel(myInstruction.type, myInstruction.goalState),
-  //   timePercent: timePercent
-  // });
+  var timePercent = (myInstruction.expireTime - currTime) / (myInstruction.expireTime - myInstruction.startTime);
+  console.log(timePercent);
+  this.uiHandler.update({
+    score: this.gameState.currScore,
+    instruction: this.getInstructionLabel(myInstruction.type, myInstruction.goalState),
+    timePercent: timePercent
+  });
 }
 
 GameHandler.prototype.getMyInstruction = function() {
@@ -123,6 +123,8 @@ GameHandler.prototype.generateNewInstructionForUser = function(userId) {
     case InstructionType.Steer:
     case InstructionType.Gas: 
     case InstructionType.Brake:
+    case InstructionType.AC:
+    case InstructionType.HeadLights:
       numStates = 2;
       expireTime = new Date().getTime() + actionTime;
       break;
@@ -147,7 +149,7 @@ GameHandler.prototype.generateNewInstruction = function() {
 GameHandler.prototype.getInstructionLabel = function(instructionType, goalState) {
   switch(instructionType) {
     case InstructionType.Steer:
-      return 'Turn steering wheel ' + goalState === 0 ? 'left' : 'right';
+      return 'Turn steering wheel ' + (goalState === 0 ? 'left' : 'right');
     case InstructionType.Gas: 
       return 'Press gas';
     case InstructionType.Brake:
@@ -167,7 +169,10 @@ GameHandler.prototype.getInstructionLabel = function(instructionType, goalState)
 var UberTeam = React.createClass({
   getInitialState: function() {
     return {
-      game_id: 1
+      game_id: 1,
+      score: 50,
+      instructionText: '',
+      timePercent: 0
     }
   },
 
@@ -182,18 +187,25 @@ var UberTeam = React.createClass({
     this.setState({gameLogic: gameHandler});
   },
 
+  update: function(data) {
+    this.setState({
+      score: data.score,
+      instructionText: data.instruction,
+      timePercent: data.timePercent
+    });
+  },
+
   render: function() {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
-          Welcome to React Native!
+          {this.state.instructionText}
         </Text>
         <Text style={styles.instructions}>
-          To get started, edit index.ios.js
+          Score: {this.state.score}
         </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+Control+Z for dev
+        <Text>
+          Time: {this.state.timePercent}
         </Text>
       </View>
     );
