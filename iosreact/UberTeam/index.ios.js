@@ -49,8 +49,12 @@ function GameHandler(userId, uiHandler, userInstructions) {
   this.gameState = new GameModel(50, userInstructions, 0);
   this.eventLoop = this.startEventLoop(15);
   this.userId = userId;
-  this.actionTime = 1000;
+  this.actionTime = 10;
   this.uiHandler = uiHandler;
+}
+
+GameHandler.prototype.stopLoop = function() {
+  clearInterval(this.eventLoop);
 }
 
 GameHandler.prototype.startEventLoop = function(interval) {
@@ -172,6 +176,8 @@ GameHandler.prototype.getInstructionLabel = function(instructionType, goalState)
   }
 }
 
+var sessionMessage = '';
+
 // TODO build a lobby screen (waiting to join a game)
 // This lobby screen will give players an option to join a game
 // Once a game has been joined, you can press start
@@ -194,17 +200,24 @@ var UberTeam = React.createClass({
 
 var StartScreen = React.createClass({
   startGame: function() {
+    sessionMessage = '';
     this.props.navigator.push({
       title: 'Game',
       component: MainScreen
     });
   },
   render: function() {
+    console.log(sessionMessage);
     return (
-      <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center'}}>
-        <TouchableHighlight onPress={this.startGame} style={{height: 30, backgroundColor: Colors.li, width:30, marginTop: 200, flexDirection: 'row', alignItems:'stretch'}}>
-          <Text>Start Game</Text>
-        </TouchableHighlight>
+      <View>
+        <Text>
+          {sessionMessage}
+        </Text>
+        <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center'}}>
+          <TouchableHighlight onPress={this.startGame} style={{height: 30, backgroundColor: Colors.li, width:30, marginTop: 200, flexDirection: 'row', alignItems:'stretch'}}>
+            <Text>Start Game</Text>
+          </TouchableHighlight>
+        </View>
       </View>
     );
   }
@@ -223,10 +236,12 @@ var MainScreen = React.createClass({
       Shift: false, 
       AC: false, 
       Headlights: false
+      timePercent: 0,
+      gameLogic: null
     }
   },
 
-  componentDidMount () {
+  componentDidMount: function() {
     // initialize socket
     var id = new Date().getTime();
     // var socket = io();
@@ -237,12 +252,22 @@ var MainScreen = React.createClass({
     this.setState({gameLogic: gameHandler});
   },
 
-  update (data) {
+  update: function(data) {
+    console.log('test');
     this.setState({
       score: data.score,
       instructionText: data.instruction,
       timePercent: data.timePercent
     });
+    if(this.state.score <= 0) {
+      sessionMessage = 'You lose!';
+      this.state.gameLogic.stopLoop();
+      this.props.navigator.pop();
+    }
+    if(this.state.score >= 100) {
+      sessionMessage = 'You win!';
+      this.props.navigator.pop();
+    }
   },
 
   _handleHeadLightsChange (value) {
