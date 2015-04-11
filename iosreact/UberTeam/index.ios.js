@@ -15,7 +15,8 @@ var {
   SwitchIOS,
   SliderIOS,
   TouchableHighlight,
-  NavigatorIOS
+  NavigatorIOS,
+  ActivityIndicatorIOS
 } = React;
 
 var InstructionType = {
@@ -198,26 +199,59 @@ var UberTeam = React.createClass({
 });
 
 var StartScreen = React.createClass({
+  getInitialState: function() {
+    var userId = new Date().getTime();
+
+    return {
+      gameReady: true,
+      users: [],
+      userId: userId
+    };
+  },
+  userJoined: function(data) {
+    this.state.users.push(data.name);
+  },
+  componentDidMount: function() {
+
+  },
   startGame: function() {
     sessionMessage = '';
     this.props.navigator.push({
       title: 'Game',
-      component: MainScreen
+      component: MainScreen,
+      passProps: {id: this.state.userId}
     });
   },
   render: function() {
-    return (
-      <View style={{flex: 1, flexDirection: 'column', justifyContent: 'center'}}>
-        <Text>
-          {{sessionMessage}}
-        </Text>
-        <View >
-          <TouchableHighlight onPress={this.startGame} style={{height: 30, width:30, marginTop: 200, flexDirection: 'row'}}>
-            <Text>Start Game</Text>
-          </TouchableHighlight>
+    if (this.state.gameReady) {
+      return (
+        <View style={{flex: 1, flexDirection: 'column', justifyContent: 'center'}}>
+          <Text>
+            {{sessionMessage}}
+          </Text>
+          <View >
+            <TouchableHighlight onPress={this.startGame} style={{height: 30, width:30, marginTop: 200, flexDirection: 'row'}}>
+              <Text>Start Game</Text>
+            </TouchableHighlight>
+          </View>
         </View>
-      </View>
-    );
+      );
+    }
+    else {
+      return (
+        <View style={{flex: 1, flexDirection: 'column', justifyContent: 'center'}}>
+          <Text>
+            {{sessionMessage}}
+          </Text>
+          <View >
+            <Text>
+              Waiting for players to join
+            </Text>
+            <ActivityIndicatorIOS color="#0000ff" />
+          </View>
+        </View>
+      );
+    }
   }
 });
 
@@ -240,12 +274,11 @@ var MainScreen = React.createClass({
 
   componentDidMount: function() {
     // initialize socket
-    var id = new Date().getTime();
     // var socket = io();
     // socket.emit('join-game', id);
     var userInstructions = {};
-    userInstructions[id] = new UserInstruction(InstructionType.Steer, new Date().getTime() + 1000, new Date().getTime(), true, 1);
-    var gameHandler = new GameHandler(id, this, userInstructions);
+    userInstructions[this.props.id] = new UserInstruction(InstructionType.Steer, new Date().getTime() + 1000, new Date().getTime(), true, 1);
+    var gameHandler = new GameHandler(this.props.id, this, userInstructions);
     this.setState({gameLogic: gameHandler});
   },
 
@@ -279,7 +312,7 @@ var MainScreen = React.createClass({
   render: function() {
     return (
       <View style={styles.container}>
-        <Image style={styles.pic} source={require('image!bug2')}>
+        <Image style={styles.pic} source={require('image!vehicle')}>
           <View style={{height: 50, width: 10}}></View>
           <View style={{height: 50, width: 10, backgroundColor: 'blue'}}></View>
         </Image>
@@ -327,7 +360,8 @@ var styles = StyleSheet.create({
   pic: {
     height: 100,
     flexDirection: 'row',
-    alignItems:'stretch'
+    alignItems:'stretch',
+    flex: 1
   },
   instructions: {
     flex: 1,
