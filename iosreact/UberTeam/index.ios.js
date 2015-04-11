@@ -5,6 +5,8 @@
 'use strict';
 
 var React = require('react-native');
+var GameHandler = require('game-handler');
+console.log(GameHandler);
 var {
   AppRegistry,
   StyleSheet,
@@ -22,8 +24,11 @@ var UberTeam = React.createClass({
 
   componentDidMount: function() {
     // initialize socket
-    var socket = io();
-    socket.emit('join-game', )
+    var id = new Date().getTime();
+    // var socket = io();
+    // socket.emit('join-game', id);
+    var gameLogic = new GameHandler(id, this);
+    this.setState({gameLogic: gameLogic});
   },
 
   render: function() {
