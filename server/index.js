@@ -19,7 +19,7 @@ io.on('connection', function(socket){
  		games_dict[game_id].players[user_id] = {'name': name};
  		emitUpdateGame(game_id, games_dict[game_id]);
 
- 		console.log('this '+ game_id + 'has these players: '+ games_dict[game_id].players.keys());
+ 		console.log('this '+ game_id + ' has these players: '+ Object.keys(games_dict[game_id].players));
  	});
 
  	socket.on('update-game', function(user_id, game_id, game_state){

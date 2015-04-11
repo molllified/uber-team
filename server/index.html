@@ -24,6 +24,7 @@
       var socket = io();
       $('form').submit(function(){
         socket.emit('join-game', $('#m').val(), 'hello', 1);
+        socket.emit('update-game', $('#m').val(), 1, 'blob');
         $('#m').val('');
         return false;
       });
