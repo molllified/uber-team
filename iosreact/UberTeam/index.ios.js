@@ -46,6 +46,7 @@ var UserInstruction = function (type, expireTime, startTime, started, goalState)
 }
 
 function GameHandler(userId, uiHandler, userInstructions) {
+  console.log(userInstructions);
   this.gameState = new GameModel(50, userInstructions, 0);
   this.eventLoop = this.startEventLoop(15);
   this.userId = userId;
@@ -80,9 +81,9 @@ GameHandler.prototype.update = function() {
 }
 
 GameHandler.prototype.handleWidgetChange = function(widgetType, state) {
-  for (userId in this.gameState.userInstructions) {
-    instruction = this.gameState.userInstructions[user];
-    if (instruction.type === widgetType && instruction.goalState === state) {
+  for (var userId in this.gameState.userInstructions) {
+    var instruction = this.gameState.userInstructions[userId];
+    if (instruction.type === InstructionType[widgetType] && instruction.goalState === state) {
       this.reward();
       this.generateNewInstructionForUser(userId);
       this.handleStateChange();
@@ -105,7 +106,6 @@ GameHandler.prototype.dispatchUIChanges = function() {
   var myInstruction = this.getMyInstruction();
   var currTime = new Date().getTime();
   var timePercent = (myInstruction.expireTime - currTime) / (myInstruction.expireTime - myInstruction.startTime);
-  console.log(myInstruction.expireTime + ' '+ currTime);
   this.uiHandler.update({
     score: this.gameState.currScore,
     instruction: this.getInstructionLabel(myInstruction.type, myInstruction.goalState),
@@ -268,16 +268,12 @@ var MainScreen = React.createClass({
 
   _handleHeadLightsChange (value) {
     this.state.Headlights = value;
-    if (!this.state.gameLogic || !value) {
-      // this.state.gameLogic.handleWidgetChange(InstructionType.Headlights, value);
-    }
+    this.state.gameLogic.handleWidgetChange('Headlights', value);
   },
 
   _handleACChange (value) {
     this.state.AC = value;
-    if (!this.state.gameLogic || !value) {
-      // this.state.gameLogic.handleWidgetChange(InstructionType.Headlights, value);
-    }
+    this.state.gameLogic.handleWidgetChange('AC', value);
   },
 
   render: function() {
