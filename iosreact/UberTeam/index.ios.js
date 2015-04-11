@@ -85,13 +85,15 @@ GameHandler.prototype.forceStateUpdate = function(newState) {
 // For when my state changes
 GameHandler.prototype.handleStateChange = function() {
   // tell server to broadcast
-  this.uiHandler.broadcastState(this.gameState);
+  this.uiHandler.broadcastState(this.gameState); // TODO molly implement this
 }
 
 GameHandler.prototype.dispatchUIChanges = function() {
   var myInstruction = this.getMyInstruction();
   var currTime = new Date().getTime();
   var timePercent = (currTime - myInstruction.startTime) / (myInstruction.expireTime - myInstruction.startTime);
+  
+  // TODO molly implement this
   this.uiHandler.update({
     score: currScore,
     instruction: this.getInstructionLabel(myInstruction.type, myInstruction.goalState),
@@ -111,7 +113,7 @@ GameHandler.prototype.reward = function() {
   this.gameState.score += 1;
 }
 
-GameHandler.prototype.generateNewInstruction = function() {
+GameHandler.prototype.generateNewInstructionForUser = function(userId) {
   var newType = (int)(Math.random() * InstructionType.keys(obj).length);
   var numStates;
   var expireTime;
@@ -134,7 +136,12 @@ GameHandler.prototype.generateNewInstruction = function() {
   var started = true
 
   var instruction = new userInstruction(newType, expireTime, startTime, started, goalState);
-  this.gameState.userInstructions[this.userId] = instruction;
+
+  this.gameState.userInstructions[userId] = instruction;
+}
+
+GameHandler.prototype.generateNewInstruction = function() {
+  this.generateNewInstructionForUser(this.userId);
 }
 
 GameHandler.prototype.getInstructionLabel = function(instructionType, goalState) {
