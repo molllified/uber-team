@@ -40,7 +40,7 @@ function GameHandler(userId, uiHandler, userInstructions) {
   this.gameState = new GameModel(50, userInstructions, 0);
   this.eventLoop = this.startEventLoop(15);
   this.userId = userId;
-  this.actionTime = 10000;
+  this.actionTime = 1000;
   this.uiHandler = uiHandler;
 }
 
@@ -50,18 +50,17 @@ GameHandler.prototype.startEventLoop = function(interval) {
 
 GameHandler.prototype.update = function() {
   var currTime = new Date().getTime();
-  var myInstructions = this.getMyInstruction();
-  for (var instruction in myInstructions) {
-    if (instruction.startTime >= currTime) {
-      instruction.started = true;
+  var myInstruction = this.getMyInstruction();
 
-      this.handleStateChange();
-    }
-    if (currTime >= instruction.expireTime) {
-      this.punish();
-      this.generateNewInstruction();
-      this.handleStateChange();
-    }
+  if (myInstruction.startTime >= currTime) {
+    myInstruction.started = true;
+
+    this.handleStateChange();
+  }
+  if (currTime >= myInstruction.expireTime) {
+    this.punish();
+    this.generateNewInstruction();
+    this.handleStateChange();
   }
 
   this.dispatchUIChanges();
@@ -86,14 +85,13 @@ GameHandler.prototype.forceStateUpdate = function(newState) {
 // For when my state changes
 GameHandler.prototype.handleStateChange = function() {
   // tell server to broadcast
-  this.uiHandler.broadcastState(this.gameState); // TODO molly implement this
+  // this.uiHandler.broadcastState(this.gameState); // TODO molly implement this
 }
 
 GameHandler.prototype.dispatchUIChanges = function() {
   var myInstruction = this.getMyInstruction();
   var currTime = new Date().getTime();
   var timePercent = (myInstruction.expireTime - currTime) / (myInstruction.expireTime - myInstruction.startTime);
-  console.log(timePercent);
   this.uiHandler.update({
     score: this.gameState.currScore,
     instruction: this.getInstructionLabel(myInstruction.type, myInstruction.goalState),
@@ -106,15 +104,15 @@ GameHandler.prototype.getMyInstruction = function() {
 }
 
 GameHandler.prototype.punish = function() {
-  this.gameState.score -= 1;
+  this.gameState.currScore -= 1;
 }
 
 GameHandler.prototype.reward = function() {
-  this.gameState.score += 1;
+  this.gameState.currScore += 1;
 }
 
 GameHandler.prototype.generateNewInstructionForUser = function(userId) {
-  var newType = (int)(Math.random() * InstructionType.keys(obj).length);
+  var newType = parseInt(Math.random() * Object.keys(InstructionType).length);
   var numStates;
   var expireTime;
   var startTime = new Date().getTime();
@@ -126,18 +124,18 @@ GameHandler.prototype.generateNewInstructionForUser = function(userId) {
     case InstructionType.AC:
     case InstructionType.HeadLights:
       numStates = 2;
-      expireTime = new Date().getTime() + actionTime;
+      expireTime = new Date().getTime() + this.actionTime;
       break;
     case InstructionType.Shift:
       numStates = 6;
-      expireTime = new Date().getTime() + actionTime;
+      expireTime = new Date().getTime() + this.actionTime;
       break;
   }
 
-  var goalState = (int)(Math.random() * numStates);
+  var goalState = parseInt(Math.random() * numStates);
   var started = true
 
-  var instruction = new userInstruction(newType, expireTime, startTime, started, goalState);
+  var instruction = new UserInstruction(newType, expireTime, startTime, started, goalState);
 
   this.gameState.userInstructions[userId] = instruction;
 }
@@ -155,7 +153,11 @@ GameHandler.prototype.getInstructionLabel = function(instructionType, goalState)
     case InstructionType.Brake:
       return 'Press brake';
     case InstructionType.Shift:
-      return 'Shift to gear ' + this.goalState + 1;
+      return 'Shift to gear ' + (goalState + 1);
+    case InstructionType.AC:
+      return 'Turn ' + (goalState === 0 ? 'off' : 'on') + ' the AC';
+    case InstructionType.HeadLights:
+      return 'Turn ' + (goalState === 0 ? 'off' : 'on') + ' the HeadLights';
   }
 }
 
@@ -182,7 +184,7 @@ var UberTeam = React.createClass({
     // var socket = io();
     // socket.emit('join-game', id);
     var userInstructions = {};
-    userInstructions[id] =new UserInstruction(InstructionType.Steer, new Date().getTime() + 10000, new Date().getTime(), true, 1);
+    userInstructions[id] = new UserInstruction(InstructionType.Steer, new Date().getTime() + 1000, new Date().getTime(), true, 1);
     var gameHandler = new GameHandler(id, this, userInstructions);
     this.setState({gameLogic: gameHandler});
   },
@@ -201,7 +203,7 @@ var UberTeam = React.createClass({
         <Text style={styles.welcome}>
           {this.state.instructionText}
         </Text>
-        <Text style={styles.instructions}>
+        <Text>
           Score: {this.state.score}
         </Text>
         <Text>
