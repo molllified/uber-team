@@ -332,13 +332,6 @@ var MainScreen = React.createClass({
         <Image style={styles.pic} source={require('image!newroad')}>
         </Image>
         <Image style={{height: 25, left: 400 * this.state.score/100. - 25, top:-33, width:50}} source={require('image!vehicle')}></Image>
-
-        <Text>
-          Score: {this.state.score}
-        </Text>
-        <Text>
-          Time: {this.state.timePercent}
-        </Text>
         <Text style={styles.banner}>{this.state.instructionText}</Text>
         <View style={{height: 3, flexDirection: 'row', alignItems:'stretch'}}>
           <View style={{height: 3, flex: this.state.timePercent, backgroundColor: Colors.lightBlue}}></View>
@@ -359,14 +352,16 @@ var MainScreen = React.createClass({
           </View>
         </View>
         <View style= {{flex: 1, flexDirection: 'row', marginTop: 20, justifyContent: 'center'}}>
-          <View style = {styles.button}>
+          <View>
             <TouchableOpacity onPress={this._onPressBrakeButton}>
-              <Text>Brake</Text>
+              <Image style={styles.brakeButton} source={require('image!brake')}>
+              </ Image>
             </TouchableOpacity>
           </View>
-          <View style = {styles.button}>
+          <View>
             <TouchableOpacity onPress={this._onPressGasButton}>
-              <Text>Gas</Text>
+              <Image style={styles.gasButton} source={require('image!gas')}>
+              </ Image>
             </TouchableOpacity>
           </View>
         </View>
@@ -383,6 +378,22 @@ var styles = StyleSheet.create({
   },
   horizontal: {
     height: 100,
+  },
+  brakeButton: {
+    height: 100,
+    width: 200,
+    // width: 100,
+    // flex: 0.01,
+    // alignItems:'stretch',
+
+  },
+  gasButton: {
+    height: 150,
+    width: 100,
+    // width: 150,
+    // flex: 0.01,
+    // alignItems:'stretch',
+
   },
   pic: {
     height: 50,

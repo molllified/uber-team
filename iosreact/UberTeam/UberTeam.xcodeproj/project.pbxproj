@@ -21,6 +21,8 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
+		1E76FD7A1AD99FC0005D20E7 /* brake.png in Resources */ = {isa = PBXBuildFile; fileRef = 1E76FD781AD99FC0005D20E7 /* brake.png */; };
+		1E76FD7B1AD99FC0005D20E7 /* gas.png in Resources */ = {isa = PBXBuildFile; fileRef = 1E76FD791AD99FC0005D20E7 /* gas.png */; };
 		4BA6A5951AD91BF90065D929 /* bug2.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BA6A5941AD91BF90065D929 /* bug2.png */; };
 		4BA6A5A41AD91E170065D929 /* bug2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BA6A5A21AD91E170065D929 /* bug2@2x.png */; };
 		4BA6A5A51AD91E170065D929 /* bug2@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BA6A5A31AD91E170065D929 /* bug2@3x.png */; };
@@ -123,6 +125,8 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = iOS/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = iOS/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
+		1E76FD781AD99FC0005D20E7 /* brake.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = brake.png; sourceTree = "<group>"; };
+		1E76FD791AD99FC0005D20E7 /* gas.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gas.png; sourceTree = "<group>"; };
 		4BA6A5941AD91BF90065D929 /* bug2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bug2.png; sourceTree = "<group>"; };
 		4BA6A5A21AD91E170065D929 /* bug2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bug2@2x.png"; sourceTree = "<group>"; };
 		4BA6A5A31AD91E170065D929 /* bug2@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bug2@3x.png"; sourceTree = "<group>"; };
@@ -216,6 +220,8 @@
 		13B07FAE1A68108700A75B9A /* UberTeam */ = {
 			isa = PBXGroup;
 			children = (
+				1E76FD781AD99FC0005D20E7 /* brake.png */,
+				1E76FD791AD99FC0005D20E7 /* gas.png */,
 				4BA6A5AC1AD94CD60065D929 /* newroad.png */,
 				4BA6A5AD1AD94CD60065D929 /* newroad@2x.png */,
 				4BA6A5AE1AD94CD60065D929 /* newroad@3x.png */,
@@ -473,6 +479,8 @@
 				4BA6A5AA1AD94CBE0065D929 /* vehicle@2x.png in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
+				1E76FD7A1AD99FC0005D20E7 /* brake.png in Resources */,
+				1E76FD7B1AD99FC0005D20E7 /* gas.png in Resources */,
 				4BA6A5951AD91BF90065D929 /* bug2.png in Resources */,
 				4BA6A5A51AD91E170065D929 /* bug2@3x.png in Resources */,
 			);
