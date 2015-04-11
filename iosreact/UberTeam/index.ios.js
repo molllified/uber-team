@@ -13,6 +13,19 @@ var {
 } = React;
 
 var UberTeam = React.createClass({
+
+  getInitialState: function() {
+    return {
+      game_id: 1
+    }
+  },
+
+  componentDidMount: function() {
+    // initialize socket
+    var socket = io();
+    socket.emit('join-game', )
+  },
+
   render: function() {
     return (
       <View style={styles.container}>
@@ -24,7 +37,7 @@ var UberTeam = React.createClass({
         </Text>
         <Text style={styles.instructions}>
           Press Cmd+R to reload,{'\n'}
-          Cmd+Control+Z for dev menu
+          Cmd+Control+Z for dev
         </Text>
       </View>
     );

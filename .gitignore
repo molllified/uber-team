@@ -4,3 +4,4 @@ node_modules
 project.xcworkspace
 xcuserdata
 xcshareddata
+*.xcodeproj
