@@ -12,6 +12,8 @@ var {
   Text,
   View,
   Image
+  SwitchIOS,
+  SliderIOS
 } = React;
 
 var InstructionType = {
@@ -219,14 +221,11 @@ var UberTeam = React.createClass({
 var styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    flexDirection: 'column',
     backgroundColor: '#F5FCFF',
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
+  horizontal: {
+    height: 100,
   },
   pic: {
     // backgroundColor: '#000000',
@@ -235,9 +234,14 @@ var styles = StyleSheet.create({
     height: 100
   },
   instructions: {
-    textAlign: 'center',
-    color: '#333333',
+    flex: 1,
+    flexDirection: 'row',
     marginBottom: 5,
+  },
+  banner: {
+    fontSize: 14,
+    textAlign: 'center',
+    marginTop: 100,
   },
 });
 
