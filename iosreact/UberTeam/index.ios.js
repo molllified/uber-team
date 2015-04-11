@@ -80,7 +80,6 @@ GameHandler.prototype.update = function() {
 }
 
 GameHandler.prototype.handleWidgetChange = function(widgetType, state) {
-  console.log(widgetType + ' '+ state);
   for (userId in this.gameState.userInstructions) {
     instruction = this.gameState.userInstructions[user];
     if (instruction.type === widgetType && instruction.goalState === state) {
@@ -207,14 +206,13 @@ var StartScreen = React.createClass({
     });
   },
   render: function() {
-    console.log(sessionMessage);
     return (
-      <View>
+      <View style={{flex: 1, flexDirection: 'column', justifyContent: 'center'}}>
         <Text>
-          {sessionMessage}
+          {{sessionMessage}}
         </Text>
-        <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center'}}>
-          <TouchableHighlight onPress={this.startGame} style={{height: 30, backgroundColor: Colors.li, width:30, marginTop: 200, flexDirection: 'row', alignItems:'stretch'}}>
+        <View >
+          <TouchableHighlight onPress={this.startGame} style={{height: 30, width:30, marginTop: 200, flexDirection: 'row'}}>
             <Text>Start Game</Text>
           </TouchableHighlight>
         </View>
@@ -252,7 +250,6 @@ var MainScreen = React.createClass({
   },
 
   update: function(data) {
-    console.log('test');
     this.setState({
       score: data.score,
       instructionText: data.instruction,
