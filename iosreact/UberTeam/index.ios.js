@@ -51,7 +51,7 @@ function GameHandler(userId, uiHandler, userInstructions) {
   this.gameState = new GameModel(50, userInstructions, 0);
   this.eventLoop = this.startEventLoop(15);
   this.userId = userId;
-  this.actionTime = 100;
+  this.actionTime = 1000;
   this.uiHandler = uiHandler;
 }
 
@@ -190,6 +190,7 @@ var UberTeam = React.createClass({
     return (
       <NavigatorIOS
         style={styles.container}
+        navigationBarHidden={true}
         initialRoute={{
           title: 'Game',
           component: StartScreen
@@ -219,7 +220,7 @@ var StartScreen = React.createClass({
     this.props.navigator.push({
       title: 'Game',
       component: MainScreen,
-      passProps: {id: this.state.userId}
+      passProps: {id: this.state.userId, navigationBarHidden: true}
     });
   },
   render: function() {
@@ -312,10 +313,9 @@ var MainScreen = React.createClass({
   render: function() {
     return (
       <View style={styles.container}>
-        <Image style={styles.pic} source={require('image!vehicle')}>
-          <View style={{height: 50, width: 10}}></View>
-          <View style={{height: 50, width: 10, backgroundColor: 'blue'}}></View>
+        <Image style={styles.pic} source={require('image!newroad')}>
         </Image>
+        <Image style={{height: 25, width:50, translateX: 59}} source={require('image!vehicle')}></Image>
         <View style={{height: 50, translateX: 50, width: 10, backgroundColor: 'red'}}></View>
 
         <Text>
@@ -358,10 +358,10 @@ var styles = StyleSheet.create({
     height: 100,
   },
   pic: {
-    height: 100,
-    flexDirection: 'row',
+    height: 50,
+    flexDirection: 'column',
     alignItems:'stretch',
-    flex: 1
+    flex: 0.5
   },
   instructions: {
     flex: 1,

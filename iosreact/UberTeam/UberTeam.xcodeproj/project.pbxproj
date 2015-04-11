@@ -24,6 +24,12 @@
 		4BA6A5951AD91BF90065D929 /* bug2.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BA6A5941AD91BF90065D929 /* bug2.png */; };
 		4BA6A5A41AD91E170065D929 /* bug2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BA6A5A21AD91E170065D929 /* bug2@2x.png */; };
 		4BA6A5A51AD91E170065D929 /* bug2@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BA6A5A31AD91E170065D929 /* bug2@3x.png */; };
+		4BA6A5A91AD94CBE0065D929 /* vehicle.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BA6A5A61AD94CBE0065D929 /* vehicle.png */; };
+		4BA6A5AA1AD94CBE0065D929 /* vehicle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BA6A5A71AD94CBE0065D929 /* vehicle@2x.png */; };
+		4BA6A5AB1AD94CBE0065D929 /* vehicle@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BA6A5A81AD94CBE0065D929 /* vehicle@3x.png */; };
+		4BA6A5AF1AD94CD60065D929 /* newroad.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BA6A5AC1AD94CD60065D929 /* newroad.png */; };
+		4BA6A5B01AD94CD60065D929 /* newroad@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BA6A5AD1AD94CD60065D929 /* newroad@2x.png */; };
+		4BA6A5B11AD94CD60065D929 /* newroad@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BA6A5AE1AD94CD60065D929 /* newroad@3x.png */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 /* End PBXBuildFile section */
 
@@ -120,6 +126,12 @@
 		4BA6A5941AD91BF90065D929 /* bug2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bug2.png; sourceTree = "<group>"; };
 		4BA6A5A21AD91E170065D929 /* bug2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bug2@2x.png"; sourceTree = "<group>"; };
 		4BA6A5A31AD91E170065D929 /* bug2@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bug2@3x.png"; sourceTree = "<group>"; };
+		4BA6A5A61AD94CBE0065D929 /* vehicle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vehicle.png; sourceTree = "<group>"; };
+		4BA6A5A71AD94CBE0065D929 /* vehicle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "vehicle@2x.png"; sourceTree = "<group>"; };
+		4BA6A5A81AD94CBE0065D929 /* vehicle@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "vehicle@3x.png"; sourceTree = "<group>"; };
+		4BA6A5AC1AD94CD60065D929 /* newroad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = newroad.png; sourceTree = "<group>"; };
+		4BA6A5AD1AD94CD60065D929 /* newroad@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "newroad@2x.png"; sourceTree = "<group>"; };
+		4BA6A5AE1AD94CD60065D929 /* newroad@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "newroad@3x.png"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -204,6 +216,12 @@
 		13B07FAE1A68108700A75B9A /* UberTeam */ = {
 			isa = PBXGroup;
 			children = (
+				4BA6A5AC1AD94CD60065D929 /* newroad.png */,
+				4BA6A5AD1AD94CD60065D929 /* newroad@2x.png */,
+				4BA6A5AE1AD94CD60065D929 /* newroad@3x.png */,
+				4BA6A5A61AD94CBE0065D929 /* vehicle.png */,
+				4BA6A5A71AD94CBE0065D929 /* vehicle@2x.png */,
+				4BA6A5A81AD94CBE0065D929 /* vehicle@3x.png */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -445,8 +463,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4BA6A5B11AD94CD60065D929 /* newroad@3x.png in Resources */,
+				4BA6A5B01AD94CD60065D929 /* newroad@2x.png in Resources */,
 				4BA6A5A41AD91E170065D929 /* bug2@2x.png in Resources */,
 				008F07F31AC5B25A0029DE68 /* main.jsbundle in Resources */,
+				4BA6A5AF1AD94CD60065D929 /* newroad.png in Resources */,
+				4BA6A5AB1AD94CBE0065D929 /* vehicle@3x.png in Resources */,
+				4BA6A5A91AD94CBE0065D929 /* vehicle.png in Resources */,
+				4BA6A5AA1AD94CBE0065D929 /* vehicle@2x.png in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				4BA6A5951AD91BF90065D929 /* bug2.png in Resources */,
