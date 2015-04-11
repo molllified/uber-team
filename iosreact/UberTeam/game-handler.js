@@ -1,0 +1,1 @@
+var GameModel = require('game-model').GameModel;
