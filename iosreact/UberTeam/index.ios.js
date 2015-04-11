@@ -26,7 +26,7 @@ var GameModel = function(currScore, userInstructions, timeToDest) {
   this.timeToDest = timeToDest;
 }
 
-var UserInstructions = function (type, expireTime, startTime, started, goalState) {
+var UserInstruction = function (type, expireTime, startTime, started, goalState) {
   this.type = type;
   this.expireTime = expireTime;
   this.startTime = startTime;
@@ -34,8 +34,8 @@ var UserInstructions = function (type, expireTime, startTime, started, goalState
   this.goalState = goalState;
 }
 
-function GameHandler(userId, uiHandler) {
-  this.gameState = new GameModel();
+function GameHandler(userId, uiHandler, userInstructions) {
+  this.gameState = new GameModel(50, userInstructions, 0);
   this.eventLoop = this.startEventLoop(15);
   this.userId = userId;
   this.actionTime = 10000;
@@ -50,7 +50,7 @@ GameHandler.prototype.update = function() {
   var currTime = new Date().getTime();
   console.log(this);
   var myInstructions = this.getMyInstruction();
-  for (instruction in myInstructions) {
+  for (var instruction in myInstructions) {
     if (instruction.startTime >= currTime) {
       instruction.started = true;
 
@@ -69,7 +69,7 @@ GameHandler.prototype.update = function() {
 GameHandler.prototype.handleWidgetChange = function(widgetType, state) {
   for (userId in this.gameState.userInstructions) {
     instruction = this.gameState.userInstructions[user];
-    if (instruction.type == widgetType && instruction.goalState = state) {
+    if (instruction.type === widgetType && instruction.goalState === state) {
       this.reward();
       this.generateNewInstructionForUser(userId);
       this.handleStateChange();
@@ -94,11 +94,11 @@ GameHandler.prototype.dispatchUIChanges = function() {
   var timePercent = (currTime - myInstruction.startTime) / (myInstruction.expireTime - myInstruction.startTime);
   
   // TODO molly implement this
-  this.uiHandler.update({
-    score: currScore,
-    instruction: this.getInstructionLabel(myInstruction.type, myInstruction.goalState),
-    timePercent: timePercent
-  });
+  // this.uiHandler.update({
+  //   score: this.gameState.currScore,
+  //   instruction: this.getInstructionLabel(myInstruction.type, myInstruction.goalState),
+  //   timePercent: timePercent
+  // });
 }
 
 GameHandler.prototype.getMyInstruction = function() {
@@ -147,7 +147,7 @@ GameHandler.prototype.generateNewInstruction = function() {
 GameHandler.prototype.getInstructionLabel = function(instructionType, goalState) {
   switch(instructionType) {
     case InstructionType.Steer:
-      return 'Turn steering wheel ' + goalState === 0 ? left : right;
+      return 'Turn steering wheel ' + goalState === 0 ? 'left' : 'right';
     case InstructionType.Gas: 
       return 'Press gas';
     case InstructionType.Brake:
@@ -157,21 +157,28 @@ GameHandler.prototype.getInstructionLabel = function(instructionType, goalState)
   }
 }
 
-var UberTeam = React.createClass({
+// TODO build a lobby screen (waiting to join a game)
+// This lobby screen will give players an option to join a game
+// Once a game has been joined, you can press start
+// If every other player also presses start, the server will call one of the players to build the gamestate
+// Then the server will broadcast initial state to everyone
+// Then an UberTeam obj can be created.
 
+var UberTeam = React.createClass({
   getInitialState: function() {
     return {
       game_id: 1
     }
   },
 
-
   componentDidMount: function() {
     // initialize socket
     var id = new Date().getTime();
     // var socket = io();
     // socket.emit('join-game', id);
-    var gameHandler = new GameHandler(id, this);
+    var userInstructions = {};
+    userInstructions[id] =new UserInstruction(InstructionType.Steer, new Date().getTime() + 10000, new Date().getTime(), true, 1);
+    var gameHandler = new GameHandler(id, this, userInstructions);
     this.setState({gameLogic: gameHandler});
   },
 
